@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ── Design Tokens ─────────────────────────────────────────────────────────
+   Tailwind v4 @theme: these become utility classes automatically.
+   e.g. --color-gold → bg-gold, text-gold, border-gold, ring-gold
+   ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Color palette */
+  --color-obsidian: #090909;
+  --color-charcoal: #1d1d1f;
+  --color-smoke:    #3a3a3c;
+  --color-mist:     #86868b;
+  --color-pearl:    #f5f5f7;
+  --color-snow:     #ffffff;
+  --color-gold:     #c8a96e;
+  --color-gold-lt:  #e8d5a3;
+  --color-gold-dk:  #9a7a45;
+
+  /* Typography — Inter loaded via next/font */
+  --font-sans: var(--font-inter);
+
+  /* Easing curves referenced in inline styles */
+  --ease-apple: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ── Base Reset & Body ───────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #090909;
+  color: #f5f5f7;
+  overflow-x: hidden;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+.font-serif-heading {
+  font-family: var(--font-serif), "Playfair Display", "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ── Custom Scrollbar ────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #c8a96e; }
+
+/* ── Text Selection ──────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(200, 169, 110, 0.18);
+  color: #c8a96e;
+}
+
+/* ── GSAP helpers ────────────────────────────────────────────────────────── */
+/* Mask wrapper: overflow-hidden div so lines "slide up" on reveal */
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+}
+
+/* ── Section transition gradient ────────────────────────────────────────── */
+.fade-to-pearl {
+  background: linear-gradient(to bottom, #090909 0%, #f5f5f7 100%);
+}
+
+/* ── Noise texture overlay (subtle grain like Apple site) ───────────────── */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Scroll indicator pulse animation ───────────────────────────────────── */
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50%       { opacity: 0.3; transform: translateY(8px); }
+}
+.animate-scroll-pulse { animation: scroll-pulse 2s ease-in-out infinite; }
+
+/* ── Gold shimmer for CTA buttons ───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.btn-gold {
+  background: linear-gradient(
+    110deg,
+    #c8a96e 0%,
+    #e8d5a3 40%,
+    #c8a96e 60%,
+    #9a7a45 100%
+  );
+  background-size: 200% auto;
+  transition: background-position 0.6s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-gold:hover {
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(200, 169, 110, 0.35);
+}
+.btn-gold:active { transform: translateY(0); }
+
+/* ── Subtle card hover utility (used on services/testimonials) ──────────── */
+.card-hover {
+  transition: transform 0.6s var(--ease-apple), box-shadow 0.6s var(--ease-apple);
+}
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Sticky CTA layout helpers ─────────────────────────────────────────── */
+.cta-floating {
+  position: fixed;
+  inset: auto 2rem 2rem auto;
+  z-index: 70;
+}
+
+.cta-mobile-sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 70;
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Trust bar ticker animation ───────────────────────────────────────── */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.trust-marquee {
+  display: flex;
+  width: fit-content;
+  animation: ticker 28s linear infinite;
+}
+
+.trust-logo-chip {
+  opacity: 0.6;
+  filter: grayscale(1);
+  transition: filter 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.trust-logo-chip:hover {
+  opacity: 1;
+  filter: grayscale(0);
+  border-color: rgba(232, 213, 163, 0.45);
+  color: var(--logo-color, #f5f5f7);
+  box-shadow: 0 0 28px rgba(200, 169, 110, 0.18);
+}
+
+.magnetic {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+@keyframes cta-sheen {
+  0%, 88% {
+    transform: translateX(-160%) skewX(-20deg);
+    opacity: 0;
+  }
+  92% {
+    opacity: 0.36;
+  }
+  100% {
+    transform: translateX(220%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+.nav-cta-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-cta-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: -25% auto -25% -30%;
+  width: 26%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: cta-sheen 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes sparkle-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) rotate(-8deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.06) rotate(6deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) rotate(12deg);
+  }
+}
+
+.animate-sparkle-pop {
+  animation: sparkle-pop 0.95s ease-out;
+}
