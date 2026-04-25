@@ -8,14 +8,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const PARTNERS = [
-  { label: "ADA", color: "#4a90d9" },
-  { label: "AACD", color: "#d96b6b" },
-  { label: "Forbes Health", color: "#5dbd5d" },
-  { label: "Vogue Wellness", color: "#d4b44a" },
-  { label: "Beverly Hills Medical", color: "#8b6bd9" },
-  { label: "Harper's Bazaar", color: "#c8a96e" },
-  { label: "Cedars-Sinai Network", color: "#4aa2a1" },
-  { label: "California Dental Board", color: "#e58a45" },
+  { label: "ISO Certified 9001:2015", color: "#5dbd5d" },
+  { label: "Indian Dental Association", color: "#4a90d9" },
+  { label: "Dental Council of India", color: "#d96b6b" },
+  { label: "Tamil Nadu Dental Council", color: "#d4b44a" },
+  { label: "Chennai Smile Network", color: "#c8a96e" },
+  { label: "Aligner Providers Academy", color: "#8b6bd9" },
 ];
 
 export default function TrustBar() {
@@ -54,7 +52,7 @@ export default function TrustBar() {
           Trusted by leading associations & publications
         </div>
         <div className="overflow-hidden">
-          <div className="trust-marquee gap-6 text-pearl/80 text-sm md:text-base font-medium">
+          <div className="flex flex-wrap justify-center trust-marquee gap-3 md:gap-6 text-pearl/80 text-sm md:text-base font-medium">
             {[...PARTNERS, ...PARTNERS].map((partner, i) => (
               <div
                 key={`${partner.label}-${i}`}

@@ -8,9 +8,8 @@ import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-/* ── Placeholder images from Unsplash — replace with real before/after photos ── */
-const BEFORE_SRC = "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=1200&q=80&auto=format&fit=crop";
-const AFTER_SRC  = "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80&auto=format&fit=crop";
+const BEFORE_SRC = "/smile.png";
+const AFTER_SRC  = "/smile.png";
 
 export default function BeforeAfter() {
   const sectionRef    = useRef<HTMLElement>(null);
@@ -20,7 +19,7 @@ export default function BeforeAfter() {
 
   /* Slider position as percentage (0 – 100) — default 50% */
   const [position, setPosition] = useState(50);
-  const isDragging = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
   const sparkleVisible = position >= 98;
 
   /* ── Section scroll reveal ──────────────────────────────────────────────── */
@@ -70,18 +69,18 @@ export default function BeforeAfter() {
   }, []);
 
   const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    isDragging.current = true;
+    setIsDragging(true);
     updatePosition(e.clientX);
     e.currentTarget.setPointerCapture(e.pointerId);
   }, [updatePosition]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!isDragging.current) return;
+    if (!isDragging) return;
     updatePosition(e.clientX);
-  }, [updatePosition]);
+  }, [isDragging, updatePosition]);
 
   const handlePointerUp = useCallback(() => {
-    isDragging.current = false;
+    setIsDragging(false);
   }, []);
 
   /* Keyboard accessibility: left/right arrows move slider */
@@ -95,7 +94,7 @@ export default function BeforeAfter() {
       ref={sectionRef}
       id="results"
       aria-label="Before and after smile transformations"
-      className="bg-obsidian py-24 md:py-36"
+      className="scroll-mt-24 bg-obsidian py-24 md:py-36"
     >
       <div className="max-w-6xl mx-auto px-6 md:px-10">
 
@@ -137,9 +136,10 @@ export default function BeforeAfter() {
               src={BEFORE_SRC}
               alt="Before dental treatment — patient's original smile"
               fill
-              className="object-cover"
+              className="object-cover sepia-[.40] brightness-90 saturate-[0.6] contrast-[0.85]"
               sizes="(max-width: 768px) 100vw, 80vw"
               quality={85}
+              priority
             />
             {/* Label */}
             <span className="absolute bottom-4 left-4 z-10 bg-obsidian/70 backdrop-blur-sm text-pearl text-xs font-semibold px-3 py-1.5 rounded-full tracking-widest uppercase">
@@ -153,7 +153,7 @@ export default function BeforeAfter() {
             style={{
               /* inset(top right bottom left) — clip right side by (100 - position)% */
               clipPath: `inset(0 ${100 - position}% 0 0)`,
-              transition: isDragging.current ? "none" : "clip-path 0.05s ease",
+              transition: isDragging ? "none" : "clip-path 0.05s ease",
             }}
             aria-hidden="true"
           >

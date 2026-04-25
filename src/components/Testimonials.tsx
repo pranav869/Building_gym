@@ -29,7 +29,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "Highly recommend Care N Cure for painless root canal treatment. Professional care and great post-treatment guidance.",
+      "Highly recommend Smile Elite for painless root canal treatment. Professional care and great post-treatment guidance.",
     author: "Gopika Venkat",
     role: "Google Review · Root Canal",
     rating: 5,
@@ -39,10 +39,10 @@ const TESTIMONIALS = [
   {
     quote:
       "From consultation to follow-up, the team was patient-focused, gentle, and professional. Excellent care for families.",
-    author: "Verified Patient",
+    author: "Kritika S",
     role: "Google Review · General Dentistry",
     rating: 5,
-    initials: "VP",
+    initials: "KS",
     color: "#8b6bd9",
   },
 ];

@@ -3,118 +3,57 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
 
-/* Register GSAP plugins once at module level (idempotent) */
-gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-/* ── Headline copy — each item becomes a masked line reveal ─────────────── */
 const HEADLINE_LINES = ["Precision", "Dentistry.", "Perfected."];
 
+const STATS = [
+  { num: "3,000+", label: "Happy Patients" },
+  { num: "15 yrs",  label: "Experience" },
+  { num: "10+",     label: "Specialities" },
+];
+
 export default function Hero() {
-  const heroRef           = useRef<HTMLElement>(null);
-  const imageWrapRef      = useRef<HTMLDivElement>(null);
-  const contentRef        = useRef<HTMLDivElement>(null);
-  const eyebrowRef        = useRef<HTMLSpanElement>(null);
-  const headlineRef       = useRef<HTMLHeadingElement>(null);
-  const subtitleRef       = useRef<HTMLParagraphElement>(null);
-  const ctaRef            = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const heroRef        = useRef<HTMLElement>(null);
+  const eyebrowRef     = useRef<HTMLSpanElement>(null);
+  const headlineRef    = useRef<HTMLHeadingElement>(null);
+  const subtitleRef    = useRef<HTMLParagraphElement>(null);
+  const ctaRef         = useRef<HTMLDivElement>(null);
+  const statsRef       = useRef<HTMLDivElement>(null);
+  const cardRef        = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      /* ── 1. Load Timeline ─────────────────────────────────────────────────
-         Each headline line is wrapped in an overflow:hidden mask (.reveal-mask)
-         so the text slides UP from below the container edge — the signature
-         Apple / award-agency "line reveal" technique.
-         ─────────────────────────────────────────────────────────────────── */
       const lines = headlineRef.current?.querySelectorAll<HTMLSpanElement>(".line");
 
-      const loadTl = gsap.timeline({
-        defaults: { ease: "power4.out" },
-        delay: 0.15,
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        delay: 0.1,
       });
 
-      loadTl
-        /* Eyebrow label fades in */
-        .fromTo(
-          eyebrowRef.current,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7 }
-        )
-        /* Headline lines slide up from beneath the overflow mask */
-        .fromTo(
-          Array.from(lines ?? []),
-          { yPercent: 112, opacity: 1 },          // Start below mask
-          { yPercent: 0, stagger: 0.1, duration: 1.1 },
-          "-=0.3"
-        )
-        /* Subtitle fades + rises */
-        .fromTo(
-          subtitleRef.current,
-          { y: 32, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9 },
-          "-=0.6"
-        )
-        /* CTA buttons */
-        .fromTo(
-          ctaRef.current,
+      tl
+        .fromTo(eyebrowRef.current,
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.5 })
+        .fromTo(Array.from(lines ?? []),
+          { yPercent: 110, opacity: 0 },
+          { yPercent: 0, opacity: 1, stagger: 0.1, duration: 0.6 },
+          "-=0.2")
+        .fromTo(subtitleRef.current,
           { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7 },
-          "-=0.6"
-        )
-        /* Scroll indicator */
-        .fromTo(
-          scrollIndicatorRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.6 },
-          "-=0.3"
-        );
-
-      /* ── 2. Hero Image Parallax ────────────────────────────────────────────
-         The background image slowly zooms in as the user scrolls the hero
-         out of view. `scrub: 1.5` adds a slight lag for a cinematic feel.
-         ─────────────────────────────────────────────────────────────────── */
-      gsap.to(imageWrapRef.current, {
-        scale: 1.12,
-        filter: "blur(3px)",
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.5,  // Adjust for more/less lag (0 = instant, 3 = very laggy)
-        },
-      });
-
-      /* ── 3. Content Fade-out on Scroll ────────────────────────────────────
-         Hero text gently floats upward and fades as the user scrolls away.
-         start / end percentages control the range of the fade.
-         ─────────────────────────────────────────────────────────────────── */
-      gsap.to(contentRef.current, {
-        opacity: 0,
-        y: -70,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "22% top",   // ← Adjust to move fade start earlier/later
-          end: "68% top",     // ← Adjust to move fade end earlier/later
-          scrub: true,
-        },
-      });
-
-      // Subtle inverse drift so text and image move at different rates (mask-like depth)
-      gsap.to(headlineRef.current, {
-        y: -36,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+          { y: 0, opacity: 1, duration: 0.5 },
+          "-=0.3")
+        .fromTo(ctaRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5 },
+          "-=0.3")
+        .fromTo(statsRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5 },
+          "-=0.3")
+        .fromTo(cardRef.current,
+          { opacity: 0, scale: 0.95, y: 30 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power3.out" },
+          0.2);
     },
     { scope: heroRef }
   );
@@ -124,125 +63,97 @@ export default function Hero() {
       ref={heroRef}
       id="hero"
       aria-label="Hero — Smile Elite Dental"
-      className="relative h-screen min-h-[600px] w-full overflow-hidden flex items-center justify-center"
+      className="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 bg-snow overflow-hidden"
     >
-      {/* ── Background image with GSAP zoom target ──────────────────────── */}
-      <div
-        ref={imageWrapRef}
-        className="absolute inset-0 w-full h-full"
-        style={{ willChange: "transform" }}  // Hint for GPU compositing
-      >
-        {/* Dual overlay: stronger bottom gradient for typography clarity */}
-        <div className="absolute inset-0 bg-obsidian/48 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-obsidian/15 via-obsidian/20 to-obsidian z-[1]" />
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        {/* LEFT COMPONENT */}
+        <div className="flex flex-col z-10">
+          <span ref={eyebrowRef} className="inline-flex items-center gap-3 text-teal text-[11px] font-bold tracking-[0.22em] uppercase mb-6 opacity-0">
+            <span className="w-8 h-px bg-teal/40" />
+            Puzhal, Chennai · Est. 2008
+          </span>
 
-        <Image
-          src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1920&q=80&auto=format&fit=crop"
-          alt="Modern dental clinic interior with state-of-the-art equipment"
-          fill
-          priority              // LCP image — no lazy-load
-          className="object-cover object-center"
-          sizes="100vw"
-          quality={85}
-        />
-      </div>
-
-      {/* ── Hero Content ─────────────────────────────────────────────────── */}
-      <div
-        ref={contentRef}
-        className="relative z-10 text-center px-6 max-w-6xl mx-auto w-full"
-        style={{ willChange: "opacity, transform" }}
-      >
-        {/* Eyebrow label */}
-        <span
-          ref={eyebrowRef}
-          className="inline-block text-gold text-xs md:text-sm font-semibold tracking-[0.28em] uppercase mb-6 opacity-0"
-        >
-          Puzhal, Chennai · Est. 2008
-        </span>
-
-        {/* ── Headline: each line has a reveal-mask wrapper ──────────────
-            The .reveal-mask parent has overflow:hidden — this clips the
-            .line child as GSAP moves it from yPercent:112 → yPercent:0,
-            producing the "text rises from beneath" effect.
-            ──────────────────────────────────────────────────────────── */}
-        <h1
-          ref={headlineRef}
-          aria-label="Precision Dentistry. Perfected."
-          className="font-serif-heading text-[clamp(3.5rem,10vw,9rem)] leading-[0.93] tracking-tight text-snow"
-        >
-          {HEADLINE_LINES.map((line, i) => (
-            <span key={line} className="reveal-mask">
-              <span
-                className={`line block ${i === HEADLINE_LINES.length - 1 ? "text-gold" : ""}`}
-              >
-                {line}
+          <h1 ref={headlineRef} className="font-serif-heading text-[clamp(3.5rem,6vw,5.5rem)] leading-[1.05] tracking-tight text-charcoal mb-6">
+            {HEADLINE_LINES.map((line, i) => (
+              <span key={line} className="reveal-mask block overflow-hidden pb-1">
+                <span className={`line block ${i === 2 ? "text-gold" : ""}`}>
+                  {line}
+                </span>
               </span>
-            </span>
-          ))}
-        </h1>
+            ))}
+          </h1>
 
-        {/* Subtitle */}
-        <p
-          ref={subtitleRef}
-          className="mt-8 text-mist text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed opacity-0"
-        >
-          Compassionate, multi-speciality dental care led by Dr. Basheera BDS.
-          Trusted for{" "}
-          <strong className="text-pearl font-medium">painless treatment experiences</strong>{" "}
-          across Chennai.
-        </p>
+          <p ref={subtitleRef} className="text-slate text-lg leading-relaxed max-w-lg mb-10 opacity-0">
+            Compassionate, multi-speciality dental care led by{" "}
+            <strong className="text-charcoal font-semibold">Dr. Basheera BDS</strong>.
+            Trusted for{" "}
+            <strong className="text-teal font-medium">painless treatment</strong>{" "}
+            across Chennai.
+          </p>
 
-        {/* CTAs */}
-        <div
-          ref={ctaRef}
-          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0"
-        >
-          <a
-            href="#contact"
-            className="btn-gold text-obsidian font-semibold text-sm px-10 py-4 rounded-full inline-flex items-center gap-2"
-          >
-            Book via Phone / WhatsApp
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
-          <a
-            href="#services"
-            className="text-pearl/80 font-medium text-sm px-10 py-4 rounded-full border border-pearl/20 hover:border-pearl/50 hover:text-pearl hover:bg-pearl/5 transition-all duration-300 inline-flex items-center gap-2"
-          >
-            Explore Services
-          </a>
+          <div ref={ctaRef} className="flex flex-wrap items-center gap-4 mb-12 opacity-0">
+            <a href="#contact" className="btn-gold text-obsidian font-bold text-sm px-8 py-4 rounded-full inline-flex items-center gap-2 transition-transform hover:-translate-y-0.5 hover:shadow-xl">
+              Book Consultation
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                <path d="M3 7.5h9M8 3.5l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+            <a href="#services" className="text-teal font-bold text-sm px-8 py-4 rounded-full border border-teal/20 hover:bg-teal/5 transition-colors duration-200">
+              Explore Services
+            </a>
+          </div>
+
+          <div ref={statsRef} className="flex flex-wrap gap-6 md:gap-10 pt-8 border-t border-smoke/10 opacity-0">
+            {STATS.map(({ num, label }) => (
+              <div key={label}>
+                <div className="text-3xl font-black text-teal leading-none mb-2">{num}</div>
+                <div className="text-[11px] text-slate font-medium tracking-wider uppercase">{label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* ── Scroll indicator ─────────────────────────────────────────────── */}
-      <div
-        ref={scrollIndicatorRef}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 opacity-0"
-        aria-hidden="true"
-      >
-        <span className="text-mist text-[10px] font-medium tracking-[0.3em] uppercase">
-          Scroll
-        </span>
-        {/* Animated chevron */}
-        <div className="animate-scroll-pulse">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M5 7.5l5 5 5-5" stroke="#c8a96e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-      </div>
+        {/* RIGHT COMPONENT - Static High-End Image */}
+        <div ref={cardRef} className="relative z-10 w-full opacity-0">
+          <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[4/5] bg-teal-lt group">
+            {/* Glossy Photo */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1600&auto=format&fit=crop')" }} 
+            />
+            {/* Subtle Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-obsidian/20 to-transparent" />
+          </div>
 
-      {/* ── Star rating pill (social proof above the fold) ───────────────── */}
-      <div className="absolute bottom-8 right-6 md:right-10 z-10 hidden sm:flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
-        <div className="flex" aria-label="4.9 out of 5 stars">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <svg key={i} width="12" height="12" viewBox="0 0 12 12" fill="#c8a96e" aria-hidden="true">
-              <path d="M6 1l1.3 3.9H11L8 7.1l1.1 3.9L6 8.8l-3.1 2.2L4 7.1 1 4.9h3.7L6 1z"/>
-            </svg>
-          ))}
+          {/* Floating Detail Badges */}
+          <div className="absolute -bottom-6 -left-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-white px-5 py-4 flex items-center gap-4">
+            <div className="w-10 h-10 bg-teal/10 rounded-full flex items-center justify-center shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0a7a8e" strokeWidth="2" strokeLinecap="round">
+                <path d="M12 2C8 2 5 5 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-4-3-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
+            <div>
+              <div className="text-xs font-black text-charcoal tracking-wide">
+                Advanced Technology
+              </div>
+              <div className="text-[10px] font-medium text-slate mt-0.5">
+                Digital X-Ray · Laser Dentistry
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute top-8 -right-4 z-20 bg-white rounded-full shadow-lg px-4 py-2 flex items-center gap-2">
+            <div className="flex gap-0.5">
+              {[1,2,3,4,5].map((i) => (
+                <svg key={i} width="12" height="12" viewBox="0 0 12 12" fill="#c8a96e">
+                  <path d="M6 1l1.3 3.9H11L8 7.1l1.1 3.9L6 8.8l-3.1 2.2L4 7.1 1 4.9h3.7L6 1z"/>
+                </svg>
+              ))}
+            </div>
+            <span className="text-xs font-bold text-charcoal ml-1">5.0</span>
+          </div>
         </div>
-        <span className="text-pearl text-xs font-medium">5.0 · Google Reviews</span>
       </div>
     </section>
   );

@@ -42,8 +42,8 @@ export default function Navbar() {
     () => {
       gsap.fromTo(
         navRef.current,
-        { y: -30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.9 }
+        { y: -20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", delay: 0.15 }
       );
     },
     { scope: navRef }

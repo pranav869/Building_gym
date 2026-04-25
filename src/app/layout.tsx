@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 /* ── Font ────────────────────────────────────────────────────────────────────
@@ -27,15 +26,15 @@ const playfair = Playfair_Display({
    Replace metadataBase URL with the real production domain before launch.
    ─────────────────────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://carencuredentalcentre.com"),
+  metadataBase: new URL("https://smileelitedental.com"),
 
   title: {
-    default: "Care N Cure Multi-Speciality Dental Centre | Puzhal, Chennai",
-    template: "%s | Care N Cure Dental Centre",
+    default: "Smile Elite Multi-Speciality Dental Centre | Puzhal, Chennai",
+    template: "%s | Smile Elite Dental Centre",
   },
 
   description:
-    "Care N Cure Multi-Speciality Dental Centre in Puzhal, Chennai offers painless root canal treatment, dental implants, braces and aligners, cosmetic dentistry, teeth cleaning, and general dental care.",
+    "Smile Elite Multi-Speciality Dental Centre in Puzhal, Chennai offers painless root canal treatment, dental implants, braces and aligners, cosmetic dentistry, teeth cleaning, and general dental care.",
 
   keywords: [
     "Dentist in Puzhal",
@@ -51,14 +50,14 @@ export const metadata: Metadata = {
     "Dr Basheera BDS",
   ],
 
-  authors: [{ name: "Care N Cure Multi-Speciality Dental Centre" }],
+  authors: [{ name: "Smile Elite Multi-Speciality Dental Centre" }],
 
   openGraph: {
-    title: "Care N Cure Multi-Speciality Dental Centre | Puzhal, Chennai",
+    title: "Smile Elite Multi-Speciality Dental Centre | Puzhal, Chennai",
     description:
       "Painless root canal, dental implants, braces and aligners, cosmetic dentistry, and preventive dental care in Chennai.",
-    url: "https://carencuredentalcentre.com",
-    siteName: "Care N Cure Dental Centre",
+    url: "https://smileelitedental.com",
+    siteName: "Smile Elite Dental Centre",
     locale: "en_US",
     type: "website",
     images: [
@@ -66,14 +65,14 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Care N Cure Multi-Speciality Dental Centre — Chennai",
+        alt: "Smile Elite Multi-Speciality Dental Centre — Chennai",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Care N Cure Dental Centre | Chennai",
+    title: "Smile Elite Dental Centre | Chennai",
     description:
       "Multi-speciality dental care in Puzhal, Chennai. Root canal, implants, braces, aligners and cosmetic dentistry.",
     images: ["/og-image.jpg"],
@@ -92,7 +91,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://carencuredentalcentre.com",
+    canonical: "https://smileelitedental.com",
   },
 
   verification: {
@@ -111,12 +110,12 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Dentist",
-  name: "Care N Cure Multi-Speciality Dental Centre",
+  name: "Smile Elite Multi-Speciality Dental Centre",
   description:
     "Multi-speciality dental centre in Puzhal, Chennai led by Dr. Basheera BDS offering teeth cleaning, painless root canal treatment, implants, braces and aligners, cosmetic dentistry, and general dental care.",
-  image: "https://carencuredentalcentre.com/clinic-exterior.jpg",
-  logo: "https://carencuredentalcentre.com/logo.png",
-  url: "https://carencuredentalcentre.com",
+  image: "https://smileelitedental.com/clinic-exterior.jpg",
+  logo: "https://smileelitedental.com/logo.png",
+  url: "https://smileelitedental.com",
   telephone: "+91-80563-90607",
   priceRange: "₹₹",
 
@@ -235,9 +234,12 @@ export default function RootLayout({
          * JSON-LD injected directly into <head> — Google's preferred placement.
          * dangerouslySetInnerHTML is safe here since the data is static / trusted.
          */}
-        <Script id="ld-json" type="application/ld+json" strategy="beforeInteractive">
-          {JSON.stringify(jsonLd)}
-        </Script>
+        <script
+          id="ld-json"
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="antialiased overflow-x-hidden">{children}</body>
     </html>

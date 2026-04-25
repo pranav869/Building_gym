@@ -5,7 +5,7 @@
    e.g. --color-gold → bg-gold, text-gold, border-gold, ring-gold
    ────────────────────────────────────────────────────────────────────────── */
 @theme {
-  /* Color palette */
+  /* ── Dark-luxe palette (footer, dark sections) ──────────────────────── */
   --color-obsidian: #090909;
   --color-charcoal: #1d1d1f;
   --color-smoke:    #3a3a3c;
@@ -16,11 +16,23 @@
   --color-gold-lt:  #e8d5a3;
   --color-gold-dk:  #9a7a45;
 
+  /* ── Healthcare light palette (hero + light sections) ──────────────── */
+  /* Primary teal — clinical, trustworthy, modern */
+  --color-teal:     #0a7a8e;
+  --color-teal-dk:  #065b6a;
+  --color-teal-lt:  #e4f4f7;
+  /* Sky — very-light bg for alternating sections */
+  --color-sky:      #f0f8fa;
+  /* Slate — readable body copy on white */
+  --color-slate:    #334155;
+
   /* Typography — Inter loaded via next/font */
   --font-sans: var(--font-inter);
 
   /* Easing curves referenced in inline styles */
   --ease-apple: cubic-bezier(0.77, 0, 0.175, 1);
+  /* Snappy ease-out for micro-interactions */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* ── Base Reset & Body ───────────────────────────────────────────────────── */
@@ -31,8 +43,8 @@ html {
 }
 
 body {
-  background-color: #090909;
-  color: #f5f5f7;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
   overflow-x: hidden;
   font-family: var(--font-inter), system-ui, sans-serif;
   letter-spacing: 0.01em;
@@ -50,7 +62,7 @@ h3,
 /* ── Custom Scrollbar ────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #c8a96e; }
 
 /* ── Text Selection ──────────────────────────────────────────────────────── */
@@ -102,22 +114,43 @@ h3,
     #9a7a45 100%
   );
   background-size: 200% auto;
-  transition: background-position 0.6s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  /* 250ms — snappy, premium, never feels laggy */
+  transition: background-position 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 .btn-gold:hover {
   background-position: right center;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 30px rgba(200, 169, 110, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(200, 169, 110, 0.4);
 }
 .btn-gold:active { transform: translateY(0); }
 
+/* ── Teal CTA button (for light-bg sections) ─────────────────────────── */
+.btn-teal {
+  background-color: #0a7a8e;
+  color: #ffffff;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-teal:hover {
+  background-color: #065b6a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(10, 122, 142, 0.35);
+}
+.btn-teal:active { transform: translateY(0); }
+
 /* ── Subtle card hover utility (used on services/testimonials) ──────────── */
+/* 280ms — the sweet spot: fast enough to feel snappy, slow enough to feel intentional */
 .card-hover {
-  transition: transform 0.6s var(--ease-apple), box-shadow 0.6s var(--ease-apple);
+  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out);
 }
 .card-hover:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+/* Light-bg variant — shadow is subtler on white */
+.card-hover-light:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(10, 122, 142, 0.12);
+  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out);
 }
 
 /* ── Sticky CTA layout helpers ─────────────────────────────────────────── */
@@ -211,4 +244,9 @@ h3,
 
 .animate-sparkle-pop {
   animation: sparkle-pop 0.95s ease-out;
+}
+
+@keyframes scrollPulse {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(250%); }
 }

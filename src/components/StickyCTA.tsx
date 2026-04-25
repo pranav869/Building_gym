@@ -36,19 +36,19 @@ export default function StickyCTA() {
           isVisible ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <div className="px-5 py-4 flex items-center gap-3">
+        <div className="px-5 py-4 flex flex-col items-center gap-3 text-center">
           <div>
             <p className="text-pearl text-sm font-semibold">Need a same-day consult?</p>
-            <p className="text-mist text-xs">Tap below to call or reserve a visit.</p>
+            <p className="text-mist text-xs mt-0.5">Tap below to call or reserve a visit.</p>
           </div>
-          <div className="ml-auto flex gap-2">
+          <div className="flex w-full justify-center gap-3">
             <a
               href="tel:08056390607"
-              className="magnetic rounded-full border border-pearl/20 text-pearl text-xs font-semibold px-4 py-2"
+              className="magnetic flex-1 text-center rounded-full border border-pearl/20 text-pearl text-sm font-semibold px-4 py-2.5"
             >
               Call
             </a>
-            <a href="#contact" className="magnetic btn-gold text-obsidian text-xs font-bold px-4 py-2 rounded-full">
+            <a href="#contact" className="magnetic flex-1 text-center btn-gold text-obsidian text-sm font-bold px-4 py-2.5 rounded-full">
               Book
             </a>
           </div>

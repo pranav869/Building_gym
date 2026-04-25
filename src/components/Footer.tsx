@@ -4,31 +4,27 @@ const NAV_COLS = [
   {
     heading: "Services",
     links: [
-      { label: "Teeth Cleaning",           href: "#services" },
-      { label: "Root Canal Treatment",     href: "#services" },
-      { label: "Dental Implants",          href: "#services" },
-      { label: "Braces & Aligners",        href: "#services" },
-      { label: "Cosmetic Dentistry",       href: "#services" },
-      { label: "Emergency Dentistry",      href: "#services" },
+      { label: "Teeth Cleaning",           href: "#cleaning" },
+      { label: "Root Canal Treatment",     href: "#root-canal" },
+      { label: "Dental Implants",          href: "#implants" },
+      { label: "Braces & Aligners",        href: "#aligners" },
+      { label: "Cosmetic Dentistry",       href: "#cosmetic" },
+      { label: "Emergency Dentistry",      href: "#contact" },
     ],
   },
   {
     heading: "Clinic",
     links: [
-      { label: "About Us",       href: "#" },
-      { label: "Our Team",       href: "#" },
-      { label: "Technology",     href: "#" },
       { label: "Patient Reviews",href: "#reviews" },
       { label: "Before & After", href: "#results" },
+      { label: "Book Consultation", href: "#contact" },
     ],
   },
   {
     heading: "Legal",
     links: [
-      { label: "Privacy Policy",    href: "#" },
-      { label: "Terms of Service",  href: "#" },
-      { label: "Accessibility",     href: "#" },
-      { label: "Cookie Settings",   href: "#" },
+      { label: "Privacy Policy",    href: "/privacy-policy" },
+      { label: "Terms of Service",  href: "/terms-of-service" },
     ],
   },
 ];
@@ -80,9 +76,9 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="md:col-span-1">
-            <Link href="/" aria-label="Care N Cure Dental Centre — home">
+            <Link href="/" aria-label="Smile Elite Dental Centre — home">
               <span className="text-snow font-black text-2xl tracking-tight">
-                Care N <span className="text-gold">Cure</span>
+                Smile<span className="text-gold">Elite</span>
               </span>
             </Link>
             <p className="text-mist text-sm leading-relaxed mt-4 max-w-[200px]">
@@ -133,7 +129,7 @@ export default function Footer() {
       <div className="border-t border-smoke/30">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-mist text-xs">
-            © {year} Care N Cure Multi-Speciality Dental Centre. All rights reserved.
+            © {year} Smile Elite Multi-Speciality Dental Centre. All rights reserved.
           </p>
           <div className="flex items-center gap-2 text-mist text-xs">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="#c8a96e" aria-hidden="true">
