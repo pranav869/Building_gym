@@ -1,29 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 const WHATSAPP_URL =
   "https://wa.me/918838250227?text=Hi%20Smile%20Elite%20Dental%2C%20I%20would%20like%20to%20book%20a%20consultation.";
 
 export default function WhatsAppPopup() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setVisible(true);
-    }, 5000);
-
-    return () => window.clearTimeout(timer);
-  }, []);
-
   return (
-    <div
-      className={`fixed z-[90] right-5 bottom-24 md:bottom-6 transition-all duration-300 ${
-        visible
-          ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-          : "opacity-0 translate-y-3 scale-95 pointer-events-none"
-      }`}
-    >
+    <div className="fixed z-[90] right-5 bottom-24 md:bottom-6">
       <a
         href={WHATSAPP_URL}
         target="_blank"

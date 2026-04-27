@@ -1,29 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 const PHONE_HREF = "tel:+918838250227";
 
 export default function PhonePopup() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    /* Show after WhatsApp icon so they don't appear at once */
-    const timer = window.setTimeout(() => {
-      setVisible(true);
-    }, 9000);
-
-    return () => window.clearTimeout(timer);
-  }, []);
-
   return (
-    <div
-      className={`fixed z-[89] right-5 bottom-40 md:bottom-22 transition-all duration-300 ${
-        visible
-          ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-          : "opacity-0 translate-y-3 scale-95 pointer-events-none"
-      }`}
-    >
+    <div className="fixed z-[89] right-5 bottom-40 md:bottom-22">
       <a
         href={PHONE_HREF}
         aria-label="Call clinic"
