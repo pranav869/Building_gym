@@ -20,6 +20,15 @@ export default function Hero() {
   const ctaRef         = useRef<HTMLDivElement>(null);
   const statsRef       = useRef<HTMLDivElement>(null);
   const cardRef        = useRef<HTMLDivElement>(null);
+  const spotlightRef   = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!spotlightRef.current || !heroRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    spotlightRef.current.style.background =
+      `radial-gradient(500px circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px,
+        rgba(10,122,142,0.08) 0%, transparent 65%)`;
+  };
 
   useGSAP(
     () => {
@@ -53,7 +62,17 @@ export default function Hero() {
         .fromTo(cardRef.current,
           { opacity: 0, scale: 0.95, y: 30 },
           { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          0.2);
+          0.2)
+        /* Badges pop in with a spring bounce after the card arrives */
+        .fromTo('[data-badge]',
+          { opacity: 0, scale: 0.4, y: 14 },
+          { opacity: 1, scale: 1, y: 0, stagger: 0.22, duration: 0.5, ease: 'back.out(1.8)' },
+          1.0)
+        /* Start a gentle float loop on the inner card element */
+        .add(() => {
+          const inner = heroRef.current?.querySelector<HTMLElement>('.card-float-inner');
+          if (inner) gsap.to(inner, { y: -10, duration: 3.5, ease: 'sine.inOut', repeat: -1, yoyo: true });
+        });
     },
     { scope: heroRef }
   );
@@ -64,7 +83,10 @@ export default function Hero() {
       id="hero"
       aria-label="Hero — Smile Elite Dental"
       className="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 bg-snow overflow-hidden"
+      onMouseMove={handleMouseMove}
     >
+      {/* Cursor spotlight — direct DOM mutation, zero React re-renders */}
+      <div ref={spotlightRef} className="pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
         {/* LEFT COMPONENT */}
         <div className="flex flex-col z-10">
@@ -115,7 +137,7 @@ export default function Hero() {
 
         {/* RIGHT COMPONENT - Static High-End Image */}
         <div ref={cardRef} className="relative z-10 w-full opacity-0">
-          <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[4/5] bg-teal-lt group">
+          <div className="card-float-inner relative rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[4/5] bg-teal-lt group">
             {/* Glossy Photo */}
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
@@ -126,7 +148,7 @@ export default function Hero() {
           </div>
 
           {/* Floating Detail Badges */}
-          <div className="absolute -bottom-6 -left-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-white px-5 py-4 flex items-center gap-4">
+          <div data-badge className="absolute -bottom-6 -left-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-white px-5 py-4 flex items-center gap-4 opacity-0">
             <div className="w-10 h-10 bg-teal/10 rounded-full flex items-center justify-center shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0a7a8e" strokeWidth="2" strokeLinecap="round">
                 <path d="M12 2C8 2 5 5 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-4-3-7-7-7z"/>
@@ -143,7 +165,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="absolute top-8 -right-4 z-20 bg-white rounded-full shadow-lg px-4 py-2 flex items-center gap-2">
+          <div data-badge className="absolute top-8 -right-4 z-20 bg-white rounded-full shadow-lg px-4 py-2 flex items-center gap-2 opacity-0">
             <div className="flex gap-0.5">
               {[1,2,3,4,5].map((i) => (
                 <svg key={i} width="12" height="12" viewBox="0 0 12 12" fill="#c8a96e">

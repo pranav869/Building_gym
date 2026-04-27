@@ -8,6 +8,8 @@ import StickyCTA from "@/components/StickyCTA";
 import SmoothScroll from "@/components/SmoothScroll";
 import MagneticEffects from "@/components/MagneticEffects";
 import Footer from "@/components/Footer";
+import WhatsAppPopup from "@/components/WhatsAppPopup";
+import PhonePopup from "@/components/PhonePopup";
 
 /* ── Dynamic imports (code-split + client-only) ─────────────────────────────
    { ssr: false } prevents GSAP / window access from running on the server.
@@ -62,6 +64,8 @@ export default function HomeClient() {
       <Footer />
 
       <StickyCTA />
+      <WhatsAppPopup />
+      <PhonePopup />
     </>
   );
 }

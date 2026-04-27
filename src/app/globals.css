@@ -250,3 +250,20 @@ h3,
   0%   { transform: translateY(-100%); }
   100% { transform: translateY(250%); }
 }
+
+/* ── Pulsing glow dot (service accent indicators) ───────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(1.7); opacity: 0.5; }
+}
+.animate-pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
+
+/* ── Testimonial auto-advance progress bar ──────────────────────────────── */
+@keyframes progress-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.progress-bar {
+  transform-origin: left;
+  animation: progress-fill 6s linear forwards;
+}

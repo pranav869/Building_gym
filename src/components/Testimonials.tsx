@@ -95,17 +95,18 @@ export default function Testimonials() {
 
   useGSAP(
     () => {
+      /* Stagger each heading element individually — feels alive, not stiff */
       gsap.fromTo(
-        sectionRef.current,
-        { opacity: 0, y: 40 },
+        sectionRef.current!.querySelectorAll('.t-reveal'),
+        { opacity: 0, y: 28 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 1,
+          opacity: 1, y: 0,
+          duration: 0.55,
+          stagger: 0.13,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 80%",
+            start: "top 82%",
             toggleActions: "play none none none",
           },
         }
@@ -137,15 +138,15 @@ export default function Testimonials() {
     >
       <div className="max-w-6xl mx-auto px-6 md:px-10">
         <div className="text-center mb-12 md:mb-16">
-          <p className="text-gold text-xs font-semibold tracking-[0.28em] uppercase mb-4">
+          <p className="t-reveal opacity-0 text-gold text-xs font-semibold tracking-[0.28em] uppercase mb-4">
             Patient Reviews
           </p>
-          <h2 className="font-serif-heading text-charcoal text-4xl md:text-5xl leading-tight">
+          <h2 className="t-reveal opacity-0 font-serif-heading text-charcoal text-4xl md:text-5xl leading-tight">
             Thousands of smiles.
             <br />
             <span className="text-gold">Zero regrets.</span>
           </h2>
-          <div className="mt-6 inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-smoke/20">
+          <div className="t-reveal opacity-0 mt-6 inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-smoke/20">
             <StarRating count={5} />
             <span className="font-semibold text-sm text-charcoal">5.0 / 5 · Google Reviews</span>
           </div>
@@ -206,7 +207,12 @@ export default function Testimonials() {
             ))}
           </div>
 
-          <div className="mt-8 flex items-center justify-between">
+          {/* Progress bar — CSS animation, key resets it on every slide change */}
+          <div className="mt-5 h-0.5 w-full overflow-hidden rounded-full bg-smoke/15">
+            <div key={activeIndex} className="progress-bar h-full w-full bg-gold" />
+          </div>
+
+          <div className="mt-4 flex items-center justify-between">
             <div className="flex gap-2">
               {TESTIMONIALS.map((_, idx) => (
                 <button

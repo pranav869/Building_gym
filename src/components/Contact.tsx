@@ -88,6 +88,10 @@ const RESOURCES = [
   "What to expect during root canal treatment",
 ];
 
+const MAPS_DIRECTIONS_URL = "https://maps.app.goo.gl/YibhYVXo6TSuW3oaA";
+const MAPS_EMBED_URL =
+  "https://maps.google.com/maps?q=Smile%20Elite%20Dental%20Clinic%20Puzhal%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed";
+
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -195,6 +199,30 @@ export default function Contact() {
                 </div>
               ))}
             </dl>
+
+            <div className="mt-10 rounded-2xl overflow-hidden border border-white/10 bg-charcoal/45 backdrop-blur-xl">
+              <div className="px-5 pt-5 pb-3 flex items-center justify-between gap-3">
+                <p className="text-pearl text-sm font-semibold">Find Us on Google Maps</p>
+                <a
+                  href={MAPS_DIRECTIONS_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-gold inline-flex items-center gap-2 text-obsidian font-bold text-[11px] px-4 py-2 rounded-full uppercase tracking-wide"
+                >
+                  Get Directions
+                </a>
+              </div>
+
+              <div className="relative w-full h-[260px] border-t border-white/10">
+                <iframe
+                  title="Smile Elite Dental Clinic location on Google Maps"
+                  src={MAPS_EMBED_URL}
+                  className="absolute inset-0 w-full h-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </div>
 
             <div className="mt-10 p-6 rounded-2xl border border-gold/20 bg-gold/5">
               <p className="text-gold text-sm font-semibold mb-2">⚡ Dental Emergency?</p>

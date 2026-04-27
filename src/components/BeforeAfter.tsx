@@ -56,6 +56,21 @@ export default function BeforeAfter() {
           },
         }
       );
+
+      /* Hint wiggle — swings the divider to show the slider is draggable.
+         Fires once on entry, then hands full control back to the user.    */
+      const proxy = { pos: 50 };
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 55%",
+          once: true,
+        },
+        delay: 0.9,
+      })
+        .to(proxy, { pos: 68, duration: 0.65, ease: "power2.out",   onUpdate: () => setPosition(proxy.pos) })
+        .to(proxy, { pos: 32, duration: 1.0,  ease: "power2.inOut", onUpdate: () => setPosition(proxy.pos) })
+        .to(proxy, { pos: 50, duration: 0.6,  ease: "power2.out",   onUpdate: () => setPosition(proxy.pos) });
     },
     { scope: sectionRef }
   );
@@ -151,8 +166,8 @@ export default function BeforeAfter() {
           <div
             className="absolute inset-0"
             style={{
-              /* inset(top right bottom left) — clip right side by (100 - position)% */
-              clipPath: `inset(0 ${100 - position}% 0 0)`,
+              /* inset(top right bottom left) — clip left side by position% */
+              clipPath: `inset(0 0 0 ${position}%)`,
               transition: isDragging ? "none" : "clip-path 0.05s ease",
             }}
             aria-hidden="true"

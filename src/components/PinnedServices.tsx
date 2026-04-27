@@ -100,15 +100,19 @@ export default function PinnedServices() {
           }
         });
 
-        // Simple elegant fade up for each card
         gsap.fromTo(card,
           { opacity: 0, y: 50 },
           {
             opacity: 1, y: 0, duration: 0.6, ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-            }
+            scrollTrigger: { trigger: card, start: "top 85%" },
+            /* Stagger the highlight chips with a spring pop after the card arrives */
+            onComplete: () => {
+              gsap.fromTo(
+                card.querySelectorAll('.highlight-chip'),
+                { opacity: 0, scale: 0.75, y: 8 },
+                { opacity: 1, scale: 1, y: 0, stagger: 0.08, duration: 0.32, ease: 'back.out(1.4)' }
+              );
+            },
           }
         );
       });
@@ -169,7 +173,7 @@ export default function PinnedServices() {
                 <span className="font-mono text-5xl font-light text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.15)" }}>
                   {service.number}
                 </span>
-                <span className="w-3 h-3 rounded-full shadow-lg" style={{ backgroundColor: service.accent, boxShadow: `0 0 15px ${service.accent}` }} aria-hidden="true" />
+                <span className="animate-pulse-glow w-3 h-3 rounded-full" style={{ backgroundColor: service.accent, boxShadow: `0 0 15px ${service.accent}` }} aria-hidden="true" />
               </div>
 
               <h3 className="font-serif-heading text-snow text-3xl md:text-4xl lg:text-[2.75rem] leading-tight mb-4">
@@ -186,7 +190,7 @@ export default function PinnedServices() {
               
               <ul className="flex flex-wrap gap-3 mb-10" role="list">
                 {service.highlights.map((h) => (
-                  <li key={h} className="text-[11px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border bg-white/5 backdrop-blur-sm" style={{ color: service.accent, borderColor: `${service.accent}30` }}>
+                  <li key={h} className="highlight-chip opacity-0 text-[11px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border bg-white/5 backdrop-blur-sm" style={{ color: service.accent, borderColor: `${service.accent}30` }}>
                     {h}
                   </li>
                 ))}
