@@ -1,41 +1,16 @@
 @import "tailwindcss";
 
-/* ── Design Tokens ─────────────────────────────────────────────────────────
-   Tailwind v4 @theme: these become utility classes automatically.
-   e.g. --color-gold → bg-gold, text-gold, border-gold, ring-gold
-   ────────────────────────────────────────────────────────────────────────── */
 @theme {
-  /* ── Dark-luxe palette (footer, dark sections) ──────────────────────── */
-  --color-obsidian: #090909;
-  --color-charcoal: #1d1d1f;
-  --color-smoke:    #3a3a3c;
-  --color-mist:     #86868b;
-  --color-pearl:    #f5f5f7;
-  --color-snow:     #ffffff;
-  --color-gold:     #c8a96e;
-  --color-gold-lt:  #e8d5a3;
-  --color-gold-dk:  #9a7a45;
-
-  /* ── Healthcare light palette (hero + light sections) ──────────────── */
-  /* Primary teal — clinical, trustworthy, modern */
-  --color-teal:     #0a7a8e;
-  --color-teal-dk:  #065b6a;
-  --color-teal-lt:  #e4f4f7;
-  /* Sky — very-light bg for alternating sections */
-  --color-sky:      #f0f8fa;
-  /* Slate — readable body copy on white */
-  --color-slate:    #334155;
-
-  /* Typography — Inter loaded via next/font */
+  --color-obsidian: #070707;
+  --color-charcoal: #101010;
+  --color-slate: #1a1a1a;
+  --color-mist: #9ca3af;
+  --color-pearl: #f6f6f6;
+  --color-orange: #f97316;
+  --color-gold: #fbbf24;
   --font-sans: var(--font-inter);
-
-  /* Easing curves referenced in inline styles */
-  --ease-apple: cubic-bezier(0.77, 0, 0.175, 1);
-  /* Snappy ease-out for micro-interactions */
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* ── Base Reset & Body ───────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -43,227 +18,178 @@ html {
 }
 
 body {
-  background-color: #f5f5f7;
-  color: #1d1d1f;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.14), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(251, 191, 36, 0.08), transparent 35%),
+    #070707;
+  color: #f6f6f6;
   overflow-x: hidden;
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-inter), "Segoe UI", sans-serif;
   letter-spacing: 0.01em;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1,
 h2,
-h3,
-.font-serif-heading {
-  font-family: var(--font-serif), "Playfair Display", "Times New Roman", serif;
-  font-weight: 600;
+h3 {
+  font-family: var(--font-inter), "Segoe UI", sans-serif;
+  font-weight: 800;
   letter-spacing: -0.02em;
 }
 
-/* ── Custom Scrollbar ────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #c8a96e; }
+::-webkit-scrollbar-thumb { background: #2f2f2f; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #f97316; }
 
-/* ── Text Selection ──────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(200, 169, 110, 0.18);
-  color: #c8a96e;
+  background: rgba(249, 115, 22, 0.25);
+  color: #fff;
 }
 
-/* ── GSAP helpers ────────────────────────────────────────────────────────── */
-/* Mask wrapper: overflow-hidden div so lines "slide up" on reveal */
-.reveal-mask {
-  overflow: hidden;
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+}
+
+.pricing-card {
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(249, 115, 22, 0.45);
+}
+
+.floating-action {
+  position: fixed;
+  right: 1.2rem;
+  z-index: 60;
+  display: inline-flex;
+  min-width: 54px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.floating-action:hover {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 768px) {
+  .floating-action {
+    right: 0.8rem;
+  }
+}
+
+/* ── MASONRY GALLERY ──────────────────────────────────────────────────────── */
+
+.gym-masonry {
+  columns: 2;
+  column-gap: 0.75rem;
+}
+
+.gym-masonry-item {
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
   display: block;
 }
 
-/* ── Section transition gradient ────────────────────────────────────────── */
-.fade-to-pearl {
-  background: linear-gradient(to bottom, #090909 0%, #f5f5f7 100%);
+@media (min-width: 768px) {
+  .gym-masonry {
+    columns: 3;
+    column-gap: 1rem;
+  }
+
+  .gym-masonry-item {
+    margin-bottom: 1rem;
+  }
 }
 
-/* ── Noise texture overlay (subtle grain like Apple site) ───────────────── */
-.noise::after {
-  content: "";
+/* ── FLOATING BUTTON PULSE ────────────────────────────────────────────────── */
+
+.ef-float-pulse {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  border-radius: 999px;
+  background: rgba(249, 115, 22, 0.4);
+  animation: efPulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
 }
 
-/* ── Scroll indicator pulse animation ───────────────────────────────────── */
-@keyframes scroll-pulse {
-  0%, 100% { opacity: 1; transform: translateY(0); }
-  50%       { opacity: 0.3; transform: translateY(8px); }
+@keyframes efPulse {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  60%  { transform: scale(1.75); opacity: 0;   }
+  100% { transform: scale(1.75); opacity: 0;   }
 }
-.animate-scroll-pulse { animation: scroll-pulse 2s ease-in-out infinite; }
 
-/* ── Gold shimmer for CTA buttons ───────────────────────────────────────── */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-.btn-gold {
+/* ── SECTION DIVIDER GLOW ─────────────────────────────────────────────────── */
+
+.section-glow-divider {
+  height: 1px;
   background: linear-gradient(
-    110deg,
-    #c8a96e 0%,
-    #e8d5a3 40%,
-    #c8a96e 60%,
-    #9a7a45 100%
+    to right,
+    transparent,
+    rgba(249, 115, 22, 0.35) 40%,
+    rgba(249, 115, 22, 0.35) 60%,
+    transparent
   );
-  background-size: 200% auto;
-  /* 250ms — snappy, premium, never feels laggy */
-  transition: background-position 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
-}
-.btn-gold:hover {
-  background-position: right center;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(200, 169, 110, 0.4);
-}
-.btn-gold:active { transform: translateY(0); }
-
-/* ── Teal CTA button (for light-bg sections) ─────────────────────────── */
-.btn-teal {
-  background-color: #0a7a8e;
-  color: #ffffff;
-  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-}
-.btn-teal:hover {
-  background-color: #065b6a;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(10, 122, 142, 0.35);
-}
-.btn-teal:active { transform: translateY(0); }
-
-/* ── Subtle card hover utility (used on services/testimonials) ──────────── */
-/* 280ms — the sweet spot: fast enough to feel snappy, slow enough to feel intentional */
-.card-hover {
-  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out);
-}
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-}
-/* Light-bg variant — shadow is subtler on white */
-.card-hover-light:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(10, 122, 142, 0.12);
-  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out);
 }
 
-/* ── Sticky CTA layout helpers ─────────────────────────────────────────── */
-.cta-floating {
-  position: fixed;
-  inset: auto 2rem 2rem auto;
-  z-index: 70;
+/* ── BUTTON RIPPLE ────────────────────────────────────────────────────────── */
+
+@keyframes ripple {
+  from { transform: scale(0); opacity: 0.45; }
+  to   { transform: scale(3); opacity: 0;    }
 }
 
-.cta-mobile-sheet {
-  position: fixed;
-  inset: auto 0 0 0;
-  z-index: 70;
-  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.35);
-}
-
-/* ── Trust bar ticker animation ───────────────────────────────────────── */
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.trust-marquee {
-  display: flex;
-  width: fit-content;
-  animation: ticker 28s linear infinite;
-}
-
-.trust-logo-chip {
-  opacity: 0.6;
-  filter: grayscale(1);
-  transition: filter 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.trust-logo-chip:hover {
-  opacity: 1;
-  filter: grayscale(0);
-  border-color: rgba(232, 213, 163, 0.45);
-  color: var(--logo-color, #f5f5f7);
-  box-shadow: 0 0 28px rgba(200, 169, 110, 0.18);
-}
-
-.magnetic {
-  transform: translate3d(0, 0, 0);
-  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: transform;
-}
-
-@keyframes cta-sheen {
-  0%, 88% {
-    transform: translateX(-160%) skewX(-20deg);
-    opacity: 0;
-  }
-  92% {
-    opacity: 0.36;
-  }
-  100% {
-    transform: translateX(220%) skewX(-20deg);
-    opacity: 0;
-  }
-}
-
-.nav-cta-shimmer {
+.btn-ripple {
   position: relative;
   overflow: hidden;
 }
 
-.nav-cta-shimmer::after {
+.btn-ripple::after {
   content: "";
   position: absolute;
-  inset: -25% auto -25% -30%;
-  width: 26%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.65), transparent);
-  animation: cta-sheen 5s ease-in-out infinite;
-  pointer-events: none;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(0);
+  opacity: 0;
 }
 
-@keyframes sparkle-pop {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) rotate(-8deg);
-  }
-  40% {
-    opacity: 1;
-    transform: scale(1.06) rotate(6deg);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.9) rotate(12deg);
-  }
+.btn-ripple:active::after {
+  animation: ripple 0.45s ease-out forwards;
 }
 
-.animate-sparkle-pop {
-  animation: sparkle-pop 0.95s ease-out;
+/* ── SCROLL-REVEAL FADE (for non-framer contexts) ─────────────────────────── */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-@keyframes scrollPulse {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(250%); }
+/* ── PREMIUM CARD GLOW ────────────────────────────────────────────────────── */
+
+.card-glow-hover {
+  transition: box-shadow 0.35s ease;
 }
 
-/* ── Pulsing glow dot (service accent indicators) ───────────────────────── */
-@keyframes pulse-glow {
-  0%, 100% { transform: scale(1);   opacity: 1; }
-  50%       { transform: scale(1.7); opacity: 0.5; }
-}
-.animate-pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
-
-/* ── Testimonial auto-advance progress bar ──────────────────────────────── */
-@keyframes progress-fill {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-.progress-bar {
-  transform-origin: left;
-  animation: progress-fill 6s linear forwards;
+.card-glow-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(249, 115, 22, 0.18),
+    0 28px 70px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(249, 115, 22, 0.07);
 }

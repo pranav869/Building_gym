@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 /* ── Font ────────────────────────────────────────────────────────────────────
@@ -9,55 +9,44 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  // Include all weights needed for the design: light body → ultra-black headlines
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
 /* ── SEO Metadata ────────────────────────────────────────────────────────────
-   Targeting: "Top-Rated Dental Clinic", "Cosmetic Dentistry", local intents.
+   Targeting: premium gym + local fitness discovery intent.
    Replace metadataBase URL with the real production domain before launch.
    ─────────────────────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://smileelitedental.com"),
+  metadataBase: new URL("https://elitefitgym.in"),
 
   title: {
-    default: "Smile Elite Multi-Speciality Dental Centre | Puzhal, Chennai",
-    template: "%s | Smile Elite Dental Centre",
+    default: "EliteFit Gym | Premium Fitness Training",
+    template: "%s | EliteFit Gym",
   },
 
   description:
-    "Smile Elite Multi-Speciality Dental Centre in Puzhal, Chennai offers painless root canal treatment, dental implants, braces and aligners, cosmetic dentistry, teeth cleaning, and general dental care.",
+    "Transform your body with premium fitness training, certified coaches, personalized diet plans, and modern equipment at EliteFit Gym.",
 
   keywords: [
-    "Dentist in Puzhal",
-    "Dental Clinic in Chennai",
-    "Root Canal Treatment Chennai",
-    "Dental Implants",
-    "Porcelain Veneers",
-    "Braces and Aligners",
-    "Teeth Whitening",
-    "Teeth Cleaning",
-    "Cosmetic Dentistry",
-    "Emergency Dentist Chennai",
-    "Dr Basheera BDS",
+    "gym near me",
+    "premium gym",
+    "fitness training",
+    "personal trainer",
+    "strength training",
+    "cardio programs",
+    "diet plans",
+    "gym membership",
   ],
 
-  authors: [{ name: "Smile Elite Multi-Speciality Dental Centre" }],
+  authors: [{ name: "EliteFit Gym" }],
 
   openGraph: {
-    title: "Smile Elite Multi-Speciality Dental Centre | Puzhal, Chennai",
+    title: "EliteFit Gym | Premium Fitness Training",
     description:
-      "Painless root canal, dental implants, braces and aligners, cosmetic dentistry, and preventive dental care in Chennai.",
-    url: "https://smileelitedental.com",
-    siteName: "Smile Elite Dental Centre",
+      "Premium fitness training with expert coaches, stylish facilities, and high-performance programs.",
+    url: "https://elitefitgym.in",
+    siteName: "EliteFit Gym",
     locale: "en_US",
     type: "website",
     images: [
@@ -65,16 +54,16 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Smile Elite Multi-Speciality Dental Centre — Chennai",
+        alt: "EliteFit Gym — Premium fitness training",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Smile Elite Dental Centre | Chennai",
+    title: "EliteFit Gym | Join Today",
     description:
-      "Multi-speciality dental care in Puzhal, Chennai. Root canal, implants, braces, aligners and cosmetic dentistry.",
+      "Transform your body with premium coaching, modern equipment, and personalized plans.",
     images: ["/og-image.jpg"],
   },
 
@@ -91,40 +80,32 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://smileelitedental.com",
-  },
-
-  verification: {
-    // Replace with your real Google Search Console verification token
-    google: "replace-with-your-google-verification-token",
+    canonical: "https://elitefitgym.in",
   },
 };
 
 /* ── JSON-LD Structured Data ──────────────────────────────────────────────────
-   Schema.org "Dentist" type (extends LocalBusiness + MedicalOrganization).
-   This is the #1 secret weapon for dominating "dentist near me" map packs —
-   Google's crawler reads this and populates the Knowledge Panel directly.
-
-   ✏️  To customize: update name, address, telephone, geo coords, and hours.
+   Schema.org "HealthClub" structured data for rich local search results.
+   Customize this with your exact address, geo coordinates, and hours.
    ─────────────────────────────────────────────────────────────────────────── */
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Dentist",
-  name: "Smile Elite Multi-Speciality Dental Centre",
+  "@type": "HealthClub",
+  name: "EliteFit Gym",
   description:
-    "Multi-speciality dental centre in Puzhal, Chennai led by Dr. Basheera BDS offering teeth cleaning, painless root canal treatment, implants, braces and aligners, cosmetic dentistry, and general dental care.",
-  image: "https://smileelitedental.com/clinic-exterior.jpg",
-  logo: "https://smileelitedental.com/logo.png",
-  url: "https://smileelitedental.com",
+    "Premium gym with certified trainers, modern equipment, personalized diet plans, and strength + cardio programs.",
+  image: "https://elitefitgym.in/og-image.jpg",
+  logo: "https://elitefitgym.in/logo.png",
+  url: "https://elitefitgym.in",
   telephone: "+91-80563-90607",
   priceRange: "₹₹",
 
   address: {
     "@type": "PostalAddress",
-    streetAddress: "1st Floor, 31F, GNT Road, Anna Memorial Nagar, Puzhal",
+    streetAddress: "Chennai, Tamil Nadu",
     addressLocality: "Chennai",
     addressRegion: "Tamil Nadu",
-    postalCode: "600066",
+    postalCode: "600001",
     addressCountry: "IN",
   },
 
@@ -134,90 +115,50 @@ const jsonLd = {
     longitude: 80.201,
   },
 
-  // Opening hours — used by Google Maps & search rich results
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "10:00",
-      closes: "14:30",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "16:30",
-      closes: "21:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Sunday"],
-      opens: "10:00",
-      closes: "14:00",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "05:30",
+      closes: "22:00",
     },
   ],
 
-  // Services offered — feeds Google's service carousel in search results
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Dental Services",
+    name: "Gym Membership Plans",
     itemListElement: [
       {
         "@type": "Offer",
         itemOffered: {
-          "@type": "MedicalProcedure",
-          name: "Teeth Cleaning",
-          description: "Professional removal of plaque, tartar, and stains.",
+          "@type": "Service",
+          name: "1 Month Membership",
+          description: "Access to all training zones and standard coaching support.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
-          "@type": "MedicalProcedure",
-          name: "Root Canal Treatment",
-          description:
-            "Painless procedures to save natural teeth with minimal discomfort.",
+          "@type": "Service",
+          name: "6 Months Membership",
+          description: "Long-term progress plan with coach check-ins and diet guidance.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
-          "@type": "MedicalProcedure",
-          name: "Dental Implants",
-          description: "Permanent, natural-looking replacement for missing teeth.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "MedicalProcedure",
-          name: "Braces & Aligners",
-          description: "Traditional braces and clear aligners for all age groups.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "MedicalProcedure",
-          name: "Cosmetic Dentistry",
-          description: "Teeth whitening, veneers and smile makeover treatments.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "MedicalProcedure",
-          name: "General Dentistry",
-          description: "Routine check-ups, extractions, crowns and bridges.",
+          "@type": "Service",
+          name: "1 Year Membership",
+          description: "Best value annual plan with personalized strength + cardio programming.",
         },
       },
     ],
   },
 
-  // Aggregate rating — boosts CTR in search results by showing stars
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "5",
-    reviewCount: "3",
+    reviewCount: "84",
     bestRating: "5",
     worstRating: "1",
   },
@@ -228,12 +169,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} scroll-smooth`}>
       <head suppressHydrationWarning>
-        {/*
-         * JSON-LD injected directly into <head> — Google's preferred placement.
-         * dangerouslySetInnerHTML is safe here since the data is static / trusted.
-         */}
         <script
           id="ld-json"
           type="application/ld+json"
