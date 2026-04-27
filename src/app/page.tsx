@@ -7,8 +7,8 @@
  * dynamic imports.
  */
 
-import HomeClient from "../components/HomeClient";
+import LuxuryHomeClient from "../components/LuxuryHomeClient";
 
 export default function HomePage() {
-  return <HomeClient />;
+  return <LuxuryHomeClient />;
 }
